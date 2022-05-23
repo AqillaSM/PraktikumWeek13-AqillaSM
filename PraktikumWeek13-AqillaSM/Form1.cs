@@ -38,22 +38,26 @@ namespace PraktikumWeek13_AqillaSM
             IsiDataPemain(0);
 
             DataTable dtNation = new DataTable();
-            sqlQuery = "select nation as 'Nationality' from nationality; ";
+            
+            
+
+            sqlQuery = "select n.nation as `Nationality`, p.nationality_id as Negarah from player p, nationality n where p.nationality_id = n.nationality_id group by p.nationality_id; ";
             sqlCommand = new MySqlCommand(sqlQuery, sqlConnect);
             sqlAdapter = new MySqlDataAdapter(sqlCommand);
             sqlAdapter.Fill(dtNation);
+            IsiDataPemain(0);
             ComboBoxNation.DataSource = dtNation;
-            ComboBoxNation.ValueMember = "Nationality";
             ComboBoxNation.DisplayMember = "Nationality";
+            ComboBoxNation.ValueMember = "Negarah";
 
             DataTable dtteam = new DataTable();
-            sqlQuery = "select team_name as 'Team' from team; ";
+            sqlQuery = "SELECT team.team_name as `Team`, player.team_id as 'Tim id' from player, team where player.team_id = team.team_id group by 1";
             sqlCommand = new MySqlCommand(sqlQuery, sqlConnect);
             sqlAdapter = new MySqlDataAdapter(sqlCommand);
             sqlAdapter.Fill(dtteam);
             ComboBoxTeam.DataSource = dtteam;
-            ComboBoxTeam.ValueMember = "Team";
             ComboBoxTeam.DisplayMember = "Team";
+            ComboBoxTeam.ValueMember = "Tim id";
 
             DateTimeBirthdate.CustomFormat = "dddd, MMMM dd, yyyy";
             DateTimeBirthdate.Format = DateTimePickerFormat.Custom;
